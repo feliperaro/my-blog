@@ -12,12 +12,14 @@ type Post = {
   tags: Tag[];
 };
 
+const initialState: Post = {
+  title: "",
+  content: "",
+  tags: [],
+};
+
 const BlogPost = () => {
-  const [post, setPost] = useState<Post>({
-    title: "",
-    content: "",
-    tags: [],
-  });
+  const [post, setPost] = useState<Post>(initialState);
 
   const handleTitleChange = (title: string) => {
     setPost({ ...post, title });
@@ -33,6 +35,7 @@ const BlogPost = () => {
 
   const handlePost = () => {
     alert("Post" + JSON.stringify(post));
+    setPost(initialState);
   };
 
   return (
