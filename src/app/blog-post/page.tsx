@@ -68,6 +68,13 @@ const BlogPost = () => {
             value={post.content}
           />
         </div>
+        <div className="">
+          <TagsInput
+            initialTags={post.tags}
+            onChange={(tags) => handleTagChange(tags)}
+          />
+        </div>
+        <div className="h-fit w-fit">{JSON.stringify(post)}</div>
         <div className="flex justify-center">
           <button
             className="
@@ -79,13 +86,6 @@ const BlogPost = () => {
             {"Create blog post"}
           </button>
         </div>
-        <div className="">
-          <TagsInput
-            initialTags={post.tags}
-            onChange={(tags) => handleTagChange(tags)}
-          />
-        </div>
-        <div className="h-fit w-fit">{JSON.stringify(post)}</div>
       </div>
     </main>
   );
