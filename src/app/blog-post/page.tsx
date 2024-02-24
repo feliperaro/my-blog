@@ -32,7 +32,7 @@ const BlogPost = () => {
   };
 
   const handlePost = () => {
-    return;
+    alert("Post" + JSON.stringify(post));
   };
 
   return (
