@@ -1,6 +1,7 @@
 "use client";
 
 import TagsInput, { Tag } from "@/components/TagsInput";
+import Link from "next/link";
 import { useState } from "react";
 
 type Post = {
@@ -36,6 +37,9 @@ const BlogPost = () => {
 
   return (
     <main className="border border-black flex min-h-screen flex-col justify-between p-12">
+      <span className="font-medium hover:font-extrabold">
+        <Link href={"/"}>Go Back</Link>
+      </span>
       <div className="flex flex-col gap-5">
         <h1 className="font-bold text-center">{"Create your blog post :D"}</h1>
         <div className="flex flex-col gap-2">
