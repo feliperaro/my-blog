@@ -47,6 +47,7 @@ const BlogPost = () => {
             id="title"
             name="title"
             onChange={(e) => handleTitleChange(e.target.value)}
+            placeholder="Post title..."
             type="text"
             value={post.title}
           />
