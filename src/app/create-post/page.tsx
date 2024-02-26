@@ -32,7 +32,7 @@ const CreatePostPage = () => {
 
   const handlePost = async () => {
     if (!post.title || !post.content) {
-      throw new Error("Please fill in all required fields.");
+      return alert("Please fill in all required fields.");
     }
 
     setIsSubmitting(true);
