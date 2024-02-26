@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Post } from "@/types/Post";
 import { Tag } from "@/types/Tag";
 import TagsInput from "@/components/TagsInput";
+import axios from "../../config/axios";
 
 const initialState: Post = {
   title: "",
@@ -14,10 +15,8 @@ const initialState: Post = {
 
 const BlogPost = () => {
   const [post, setPost] = useState<Post>(initialState);
-
-  const handleTitleChange = (title: string) => {
-    setPost({ ...post, title });
-  };
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const handleContentChange = (content: string) => {
     setPost({ ...post, content });
@@ -27,18 +26,36 @@ const BlogPost = () => {
     setPost({ ...post, tags: newTags });
   };
 
-  const handlePost = () => {
-    alert("Post" + JSON.stringify(post));
-    setPost(initialState);
+  const handleTitleChange = (title: string) => {
+    setPost({ ...post, title });
+  };
+
+  const handlePost = async () => {
+    if (!post.title || !post.content) {
+      throw new Error("Please fill in all required fields.");
+    }
+
+    setIsSubmitting(true);
+    setErrorMessage(null);
+
+    try {
+      const response = await axios.post("/posts", post);
+      console.log("Post submitted successfully:", response.data);
+      setPost(initialState);
+    } catch (error: any) {
+      console.error("Error submitting post:", error);
+      setErrorMessage(error.message || "An error occurred.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
-    <main className="border border-black flex min-h-screen flex-col justify-between p-12">
+    <main className="flex min-h-screen flex-col gap-5 justify-between p-12">
       <span className="font-medium hover:font-extrabold">
-        <Link href={"/"}>Go Back</Link>
+        <Link href={"/"}>Back</Link>
       </span>
       <div className="flex flex-col gap-5">
-        <h1 className="font-bold text-center">{"Create your blog post :D"}</h1>
         <div className="flex flex-col gap-2">
           <label className="font-semibold" htmlFor="title">
             {"Title:"}
@@ -75,16 +92,13 @@ const BlogPost = () => {
             onChange={(tags) => handleTagChange(tags)}
           />
         </div>
-        <div className="h-fit w-fit">{JSON.stringify(post)}</div>
         <div className="flex justify-center">
           <button
-            className="
-            border border-gray-700 pb-1 pl-6 pr-6 pt-1 rounded
-            hover:font-bold"
+            className="border border-gray-700 pb-1 pl-6 pr-6 pt-1 rounded hover:font-extrabold hover:border-gray-900"
             onClick={handlePost}
             type="button"
           >
-            {"Create blog post"}
+            {"Create post"}
           </button>
         </div>
       </div>
