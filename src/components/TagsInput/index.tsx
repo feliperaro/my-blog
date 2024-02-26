@@ -1,8 +1,5 @@
 import React, { useState } from "react";
-
-export type Tag = {
-  label: string;
-};
+import { Tag } from "@/types/Tag";
 
 const TagsInput: React.FC<{
   initialTags?: Tag[];
