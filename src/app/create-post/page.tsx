@@ -13,7 +13,7 @@ const initialState: Post = {
   tags: [],
 };
 
-const BlogPost = () => {
+const CreatePostPage = () => {
   const [post, setPost] = useState<Post>(initialState);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
@@ -106,4 +106,4 @@ const BlogPost = () => {
   );
 };
 
-export default BlogPost;
+export default CreatePostPage;
