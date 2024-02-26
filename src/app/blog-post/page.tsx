@@ -1,16 +1,10 @@
 "use client";
 
-import TagsInput, { Tag } from "@/components/TagsInput";
-import Link from "next/link";
 import { useState } from "react";
-
-type Post = {
-  title: string;
-  content: string;
-  dateCreated?: Date;
-  category?: string;
-  tags: Tag[];
-};
+import Link from "next/link";
+import { Post } from "@/types/Post";
+import { Tag } from "@/types/Tag";
+import TagsInput from "@/components/TagsInput";
 
 const initialState: Post = {
   title: "",
