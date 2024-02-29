@@ -30,11 +30,17 @@ const PostsPage = () => {
   }, []);
 
   return (
-    <main className="flex min-h-screen flex-col gap-5 p-12">
-      <span className="font-medium hover:font-extrabold">
-        <Link href={"/"}>Back</Link>
-      </span>
-      <div className="flex flex-wrap gap-5 justify-center ml-1 mr-1">
+    <main className="flex min-h-screen flex-col gap-5 p-10">
+      <div className="flex flex-col">
+        <span className="font-medium hover:font-extrabold">
+          <Link href={"/"}>Back</Link>
+        </span>
+        <span className="font-medium hover:font-extrabold">
+          <Link href={"/create-post"}>{"Create a new post"}</Link>
+        </span>
+      </div>
+      <h1 className="font-bold text-center text-xl">{"Your posts"}</h1>
+      <div className="border flex flex-wrap gap-5 justify-center ml-1 mr-1">
         {isLoading && <p>Loading posts...</p>}
         {error && <p>{error}</p>}
         <div className="flex flex-col gap-5 h-fit min-w-fit">
