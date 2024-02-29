@@ -12,11 +12,11 @@ export default function Page({ params }: { params: { id: string } }) {
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<any>(null);
-  const [post, setPosts] = useState<Post>();
+  const [post, setPost] = useState<Post>();
   const [showEditModal, setShowEditModal] = useState<boolean>(false);
 
   useEffect(() => {
-    const fetchPosts = async () => {
+    const fetchPost = async () => {
       setIsLoading(true);
       setError(null);
 
@@ -24,8 +24,8 @@ export default function Page({ params }: { params: { id: string } }) {
         const response = await fetch(
           "http://localhost:3000/api/posts/" + params.id
         );
-        const posts = await response.json();
-        setPosts(posts);
+        const post = await response.json();
+        setPost(post);
       } catch (error) {
         setError("Failed to fetch posts");
       } finally {
@@ -33,13 +33,10 @@ export default function Page({ params }: { params: { id: string } }) {
       }
     };
 
-    fetchPosts();
+    fetchPost();
   }, [params.id]);
 
-  const handleDelete = async () => {
-    const answer = confirm("Are you sure you want to delete this post?");
-    if (!answer) return;
-
+  const deletePost = async () => {
     try {
       const response = await fetch(
         `http://localhost:3000/api/posts/${params.id}`,
@@ -63,8 +60,40 @@ export default function Page({ params }: { params: { id: string } }) {
     }
   };
 
-  const handleEdit = () => {
-    setShowEditModal(!showEditModal);
+  const editPost = async (post: Post) => {
+    try {
+      const response = await fetch(
+        `http://localhost:3000/api/posts/${params.id}`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(post),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to edit post");
+      }
+
+      const data = await response.json();
+      setPost(data);
+    } catch (error: any) {
+      console.error(error);
+      alert(error.message);
+    } finally {
+      setShowEditModal(false);
+    }
+  };
+
+  const handleClickDeletePost = () => {
+    const answer = confirm("Are you sure you want to delete this post?");
+    if (!answer) return;
+    deletePost();
+  };
+
+  const handleClickEditPost = (post: Post) => {
+    // TODO: Validate new post before updating
+    editPost(post);
   };
 
   return (
@@ -72,25 +101,38 @@ export default function Page({ params }: { params: { id: string } }) {
       <span className="font-medium hover:font-extrabold">
         <Link href={"/posts"}>Back</Link>
       </span>
-      <div className="flex flex-col gap-5 items-center justify-center">
-        {isLoading && <p>Loading posts...</p>}
-        {error && <p>{error}</p>}
-        <div className="flex flex-col gap-5 h-fit w-fit">
-          <PostCard post={post} />
+      {error && <p>{error}</p>}
+      {post && !showEditModal ? (
+        <div className="flex flex-col gap-5 items-center justify-center">
+          <div className="flex flex-col gap-5 h-fit w-fit">
+            <PostCard post={post} />
+          </div>
+          <div className="flex flex-col justify-between">
+            <span
+              className="hover:font-extrabold"
+              onClick={() => setShowEditModal(true)}
+            >
+              Edit Post
+            </span>
+            <span
+              className="hover:font-extrabold hover:text-red-500"
+              onClick={handleClickDeletePost}
+            >
+              Delete Post
+            </span>
+          </div>
         </div>
-        <div className="flex flex-col justify-between">
-          <span className="hover:font-extrabold" onClick={handleEdit}>
-            Edit Post
-          </span>
-          <span
-            className="hover:font-extrabold hover:text-red-500"
-            onClick={handleDelete}
-          >
-            Delete Post
-          </span>
+      ) : (
+        <div className="flex justify-center h-fit w-full">
+          {post && (
+            <EditPostModal
+              post={post}
+              onClickCancel={() => setShowEditModal(false)}
+              onClickEdit={(post) => handleClickEditPost(post)}
+            />
+          )}
         </div>
-        {showEditModal && <EditPostModal post={post} />}
-      </div>
+      )}
     </main>
   );
 }
