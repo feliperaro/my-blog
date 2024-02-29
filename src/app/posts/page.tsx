@@ -37,14 +37,15 @@ const PostsPage = () => {
       <div className="flex flex-wrap gap-5 justify-center ml-1 mr-1">
         {isLoading && <p>Loading posts...</p>}
         {error && <p>{error}</p>}
-        {posts.length === 0 && <div>No posts available...</div>}
-        {posts.map((post: Post, index: number) => (
-          <div className="h-fit w-fit" key={index}>
-            <Link href={"post/" + post._id}>
-              <PostCard post={post} />
-            </Link>
-          </div>
-        ))}
+        <div className="flex flex-col gap-5 h-fit min-w-fit">
+          {posts.map((post: Post, index: number) => (
+            <div className="h-fit min-w-fit" key={index}>
+              <Link href={"post/" + post._id}>
+                <PostCard post={post} />
+              </Link>
+            </div>
+          ))}
+        </div>
       </div>
     </main>
   );
