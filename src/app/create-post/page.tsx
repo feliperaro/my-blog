@@ -48,7 +48,7 @@ const CreatePostPage = () => {
   };
 
   return (
-    <main className="flex min-h-screen flex-col gap-5 justify-between p-12">
+    <main className="flex min-h-screen flex-col gap-5 justify-between p-4">
       <div className="flex flex-col">
         <span className="font-medium hover:font-extrabold">
           <Link href={"/"}>Back</Link>
@@ -88,7 +88,10 @@ const CreatePostPage = () => {
             value={post.content}
           />
         </div>
-        <div className="">
+        <div className="flex flex-col gap-2">
+          <label className="font-semibold" htmlFor="content">
+            {"Tags:"}
+          </label>
           <TagsInput
             initialTags={post.tags}
             onChange={(tags) => handleTagChange(tags)}
