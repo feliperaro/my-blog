@@ -2,10 +2,10 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Post } from "@/types/Post";
-import { Tag } from "@/types/Tag";
+import Post from "@/types/Post";
 import TagsInput from "@/components/TagsInput";
 import axios from "../../config/axios";
+import { useRouter } from "next/navigation";
 
 const initialState: Post = {
   title: "",
@@ -14,15 +14,14 @@ const initialState: Post = {
 };
 
 const CreatePostPage = () => {
+  const router = useRouter();
   const [post, setPost] = useState<Post>(initialState);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(null);
 
   const handleContentChange = (content: string) => {
     setPost({ ...post, content });
   };
 
-  const handleTagChange = (newTags: Tag[]) => {
+  const handleTagChange = (newTags: string[]) => {
     setPost({ ...post, tags: newTags });
   };
 
@@ -35,18 +34,16 @@ const CreatePostPage = () => {
       return alert("Please fill in all required fields.");
     }
 
-    setIsSubmitting(true);
-    setErrorMessage(null);
-
     try {
       const response = await axios.post("/posts", post);
-      console.log("Post submitted successfully:", response.data);
-      setPost(initialState);
+      const msgSuccess = "Post submitted successfully";
+      console.log(msgSuccess, response.data);
+      alert(msgSuccess);
+      router.push("/posts");
     } catch (error: any) {
-      console.error("Error submitting post:", error);
-      setErrorMessage(error.message || "An error occurred.");
-    } finally {
-      setIsSubmitting(false);
+      const msgError: string = "Error submitting post";
+      console.error(msgError, error);
+      alert(msgError);
     }
   };
 
