@@ -30,10 +30,10 @@ const PostsPage = () => {
   }, []);
 
   return (
-    <main className="flex min-h-screen flex-col gap-5 p-10">
+    <main className="flex min-h-screen flex-col gap-5 p-4">
       <div className="flex flex-col">
         <span className="font-medium hover:font-extrabold">
-          <Link href={"/"}>Back</Link>
+          <Link href={"/"}>{"Home"}</Link>
         </span>
         <span className="font-medium hover:font-extrabold">
           <Link href={"/create-post"}>{"Create a new post"}</Link>
