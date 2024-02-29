@@ -2,7 +2,7 @@
 
 import PostCard from "@/components/PostCard";
 import { useEffect, useState } from "react";
-import Post from "../types/post";
+import Post from "@/types/Post";
 import Link from "next/link";
 
 const PostsPage = () => {
