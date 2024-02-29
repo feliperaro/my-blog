@@ -1,9 +1,11 @@
-import { Tag } from "../Tag";
-
-export type Post = {
+type Post = {
+  _id: string;
   title: string;
   content: string;
-  dateCreated?: Date;
   category?: string;
-  tags: Tag[];
+  tags: string[];
+  created_at: Date;
+  updated_at: Date;
 };
+
+export default Post;
