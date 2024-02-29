@@ -39,7 +39,7 @@ const PostsPage = () => {
         {error && <p>{error}</p>}
         {posts.map((post: Post, index: number) => (
           <div className="h-fit w-fit" key={index}>
-            <Link href={post._id}>
+            <Link href={"post/" + post._id}>
               <PostCard post={post} />
             </Link>
           </div>
