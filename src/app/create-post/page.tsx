@@ -49,9 +49,14 @@ const CreatePostPage = () => {
 
   return (
     <main className="flex min-h-screen flex-col gap-5 justify-between p-12">
-      <span className="font-medium hover:font-extrabold">
-        <Link href={"/"}>Back</Link>
-      </span>
+      <div className="flex flex-col">
+        <span className="font-medium hover:font-extrabold">
+          <Link href={"/"}>Back</Link>
+        </span>
+        <span className="font-medium hover:font-extrabold">
+          <Link href={"/posts"}>{"Your posts"}</Link>
+        </span>
+      </div>
       <div className="flex flex-col gap-5">
         <div className="flex flex-col gap-2">
           <label className="font-semibold" htmlFor="title">
