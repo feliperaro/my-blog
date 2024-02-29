@@ -37,6 +37,7 @@ const PostsPage = () => {
       <div className="flex flex-wrap gap-5 justify-center ml-1 mr-1">
         {isLoading && <p>Loading posts...</p>}
         {error && <p>{error}</p>}
+        {posts.length === 0 && <div>No posts available...</div>}
         {posts.map((post: Post, index: number) => (
           <div className="h-fit w-fit" key={index}>
             <Link href={"post/" + post._id}>
