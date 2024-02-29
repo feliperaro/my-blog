@@ -92,8 +92,20 @@ export default function Page({ params }: { params: { id: string } }) {
   };
 
   const handleClickEditPost = (post: Post) => {
-    // TODO: Validate new post before updating
-    editPost(post);
+    if (validateInputs(post.title, post.content)) editPost(post);
+    else alert("Please validate your inputs");
+  };
+
+  const validateInputs = (title: string, content: string): boolean => {
+    if (!title || title.trim().length === 0) {
+      return false;
+    }
+
+    if (!content || content.trim().length === 0) {
+      return false;
+    }
+
+    return true;
   };
 
   return (
