@@ -40,7 +40,7 @@ const PostsPage = () => {
         </span>
       </div>
       <h1 className="font-bold text-center text-xl">{"Your posts"}</h1>
-      <div className="border flex flex-wrap gap-5 justify-center ml-1 mr-1">
+      <div className="border flex flex-wrap gap-5 justify-center ml-1 mr-1 p-5">
         {isLoading && <p>Loading posts...</p>}
         {error && <p>{error}</p>}
         <div className="flex flex-col gap-5 h-fit min-w-fit">
